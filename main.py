@@ -10,7 +10,7 @@ IMAGE= 'img_forest.jpg'
 
 pygame.init()
 screen = pygame.display.set_mode(WINDOW_SIZE)
-pygame.display.set_caption("My First Game !")
+pygame.display.set_caption("My First Game!")
 
 #fill screen and show
 img= pygame.image.load(IMAGE)
