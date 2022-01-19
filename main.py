@@ -1,4 +1,3 @@
-from turtle import delay
 import pygame
 import time
 
@@ -18,10 +17,7 @@ ship_image= pygame.transform.scale(ship_image, (50,80))
 
 clock= pygame.time.Clock()
 
-ci
-
-
-rcle_x= 10
+circle_x= 10
 circle_y= WINDOW_H/2
 x_step= 10
 play = True
