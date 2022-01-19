@@ -10,14 +10,17 @@ IMAGE= 'img_forest.jpg'
 
 pygame.init()
 screen = pygame.display.set_mode(WINDOW_SIZE)
-pygame.display.set_caption("My First Game!")
+pygame.display.set_caption("My First Game !")
 
 #fill screen and show
 img= pygame.image.load(IMAGE)
 
 clock= pygame.time.Clock()
 
-circle_x= 10
+ci
+
+
+rcle_x= 10
 circle_y= WINDOW_H/2
 x_step= 10
 
