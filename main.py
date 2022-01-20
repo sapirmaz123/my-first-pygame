@@ -9,7 +9,7 @@ WINDOW_SIZE = (WINDOW_W, WINDOW_H)
 
 pygame.init()
 screen = pygame.display.set_mode(WINDOW_SIZE)
-pygame.display.set_caption("My First Game !")
+pygame.display.set_caption("My First Game!")
 
 #fill screen and show
 background= pygame.image.load('space.jpg')
