@@ -8,12 +8,15 @@ WINDOW_SIZE = (WINDOW_W, WINDOW_H)
 
 pygame.init()
 screen = pygame.display.set_mode(WINDOW_SIZE)
-pygame.display.set_caption("My First Game! ")
+pygame.display.set_caption("My First Game!")
 
 # fill screen and show
 background = pygame.image.load('space.jpg')
 ship_image = pygame.image.load('spaceship.png')
 ship_image = pygame.transform.scale(ship_image, (50, 80))
+laser_image = pygame.image.load('laser.png')
+laser_image = pygame.transform.scale(laser_image, (20, 30))
+
 
 clock = pygame.time.Clock()
 
@@ -23,6 +26,8 @@ x_step = 10
 play = True
 ship_x = WINDOW_W / 2
 ship_y = WINDOW_H - 80
+laser_x= -100
+laser_y= -100
 
 while play:
     pygame.draw.circle(screen, (255, 255, 255), (circle_x, circle_y), 10)
@@ -41,10 +46,13 @@ while play:
             if event.key == pygame.K_RIGHT:
                 ship_x += 10
             if event.key == pygame.K_SPACE:
-                ship_y -= WINDOW_H - 80
-
+                laser_x = ship_x + 16
+                laser_y = ship_y
     screen.blit(background, (0, 0))
+    laser_y -= 16
     screen.blit(ship_image, (ship_x, ship_y))
-    clock.tick(60)
+    screen.blit(laser_image, (laser_x, laser_y))
+
+    clock.tick(20)
 
 pygame.quit()
