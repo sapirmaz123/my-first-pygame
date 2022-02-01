@@ -17,6 +17,11 @@ ship_image = pygame.transform.scale(ship_image, (50, 80)) #שמירת החללי
 laser_image = pygame.image.load('laser.png') #העלאת הלייזר ושמירה במשתנה
 laser_image = pygame.transform.scale(laser_image, (20, 30)) #שמירת הלייזר בגודל הרצוי
 
+# add sound
+gun_shoot="Gun_shoot.mp3" #שמירת הסאונד במשתנה
+pygame.mixer.init() #התחלת סאונד
+pygame.mixer.music.load(gun_shoot) #העלאה של הסאונד
+
 
 clock = pygame.time.Clock() #הגדרת שעון 
 
@@ -48,6 +53,8 @@ while play:
             if event.key == pygame.K_SPACE: #אם הלחיצה היא על מקש הרווח
                 laser_x = ship_x + 16 #ציר האיקס של הלייזר= לציר האיקס של החללית+ חצי מגודל החללית (כך שיצא מאמצע החללית)
                 laser_y = ship_y #ציר הווי של הלייזר= לציר הווי של החללית
+                pygame.mixer.Channel(0).play(pygame.mixer.Sound(gun_shoot)) # פתיחת ערוץ למקרה שנוסיף עוד סאונד וניגון של הסאונד
+
     screen.blit(background, (0, 0)) #הצגת הרקע 
     laser_y -= 10 #הקטנת ציר הווי של הלייזר כדי שיזוז למעלה
     screen.blit(ship_image, (ship_x, ship_y)) #הצגת החללית במיקום שהגדרנו
