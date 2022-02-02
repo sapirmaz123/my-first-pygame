@@ -23,7 +23,27 @@ pygame.mixer.init() #התחלת סאונד
 pygame.mixer.music.load(gun_shoot) #העלאה של הסאונד
 
 
-clock = pygame.time.Clock() #הגדרת שעון 
+clock = pygame.time.Clock() #הגדרת שעון  
+
+def is_laser_hit(laser_pos):
+  return abs(laser_pos[0]-circle_x) <50 and abs(laser_pos[1]-circle_y) <50 
+    
+
+laser_list = []
+# prints all the laser on the screen
+def print_lasers():
+  for i in range(len(laser_list)):
+    laser = laser_list[i]
+    screen.blit(laser_image,(laser[0],laser[1]))
+    laser_list[i] = [laser[0],laser[1]-30]
+    if is_laser_hit(laser): 
+      print("hit")
+
+  # remove lazer that our outside of the window
+  if len(laser_list) > 0 and laser_list[0][1] < 0:
+    laser_list.remove(laser_list[0])
+
+pygame.font.init() 
 
 circle_x = 10 #ציר האיקס של הכדור
 circle_y = WINDOW_H/2 #ציר הווי של הכדור (גובה המסך/ 2)
@@ -35,6 +55,11 @@ laser_y= -100  #הגדרת ציר האיקס של הלייזר כך שלא יר�
 play = True 
 
 while play:
+    blue = (0, 0, 128)
+    font = pygame.font.SysFont(None, 24)
+    img = font.render('score:', True, blue)
+    screen.blit(img, (20, 20))
+
     pygame.draw.circle(screen, (255, 255, 255), (circle_x, circle_y), 10) #ציור עיגול (מסך, צבע לבן, מיקום שהגדרנו, רדיוס)
     circle_x += x_step #הגדלת ציר האיקס של הכדור כדי שיזוז לפי הצעדים שהגדרנו
     if circle_x > WINDOW_W: #אם ציר האיקס של הכדור גדול מרוחב המסך
@@ -51,14 +76,14 @@ while play:
             if event.key == pygame.K_RIGHT: #אם הלחיצה היא על המקש ימינה
                 ship_x += 10 #ציר האיקס של החללית יגדל ב10
             if event.key == pygame.K_SPACE: #אם הלחיצה היא על מקש הרווח
-                laser_x = ship_x + 16 #ציר האיקס של הלייזר= לציר האיקס של החללית+ חצי מגודל החללית (כך שיצא מאמצע החללית)
-                laser_y = ship_y #ציר הווי של הלייזר= לציר הווי של החללית
                 pygame.mixer.Channel(0).play(pygame.mixer.Sound(gun_shoot)) # פתיחת ערוץ למקרה שנוסיף עוד סאונד וניגון של הסאונד
+                laser_list.append([ship_x+16,ship_y])
 
     screen.blit(background, (0, 0)) #הצגת הרקע 
-    laser_y -= 10 #הקטנת ציר הווי של הלייזר כדי שיזוז למעלה
+    # laser_y -= 10 #הקטנת ציר הווי של הלייזר כדי שיזוז למעלה
     screen.blit(ship_image, (ship_x, ship_y)) #הצגת החללית במיקום שהגדרנו
     screen.blit(laser_image, (laser_x, laser_y)) #הצגת הלייזר במיקום שהגדרנו
+    print_lasers()
 
     clock.tick(40) #קצב החזרה של הלולאה
 
