@@ -19,8 +19,10 @@ laser_image = pygame.transform.scale(laser_image, (20, 30)) #שמירת הליי
 
 # add sound
 gun_shoot="Gun_shoot.mp3" #שמירת הסאונד במשתנה
+success= "winning.mp3"
 pygame.mixer.init() #התחלת סאונד
 pygame.mixer.music.load(gun_shoot) #העלאה של הסאונד
+pygame.mixer.music.load(success) 
 
 
 clock = pygame.time.Clock() #הגדרת שעון  
@@ -45,6 +47,7 @@ def print_lasers():
 
 pygame.font.init() 
 
+counter= 0
 circle_x = 10 #ציר האיקס של הכדור
 circle_y = WINDOW_H/2 #ציר הווי של הכדור (גובה המסך/ 2)
 x_step = 10 #צעדים בציר האיקס של הכדור
@@ -55,10 +58,6 @@ laser_y= -100  #הגדרת ציר האיקס של הלייזר כך שלא יר�
 play = True 
 
 while play:
-    blue = (0, 0, 128)
-    font = pygame.font.SysFont(None, 24)
-    img = font.render('score:', True, blue)
-    screen.blit(img, (20, 20))
 
     pygame.draw.circle(screen, (255, 255, 255), (circle_x, circle_y), 10) #ציור עיגול (מסך, צבע לבן, מיקום שהגדרנו, רדיוס)
     circle_x += x_step #הגדלת ציר האיקס של הכדור כדי שיזוז לפי הצעדים שהגדרנו
@@ -84,6 +83,13 @@ while play:
     screen.blit(ship_image, (ship_x, ship_y)) #הצגת החללית במיקום שהגדרנו
     if print_lasers():
         circle_x= 10
+        pygame.mixer.Channel(1).play(pygame.mixer.Sound(success))
+        counter+=10
+
+    blue = (150, 0, 0)
+    font = pygame.font.SysFont(None, 50)
+    img = font.render('score: '+ str(counter), True, blue)
+    screen.blit(img, (20, 20))
 
     clock.tick(40) #קצב החזרה של הלולאה
 
