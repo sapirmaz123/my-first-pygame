@@ -2,8 +2,8 @@ import pygame #ליבא ספריה של pygame
 import time #ליבא ספריה של זמן  
 
 # screen size
-WINDOW_W = 500 #הגדרת רוחב מסך
-WINDOW_H = 228 #הגדרת גובה מסך
+WINDOW_W = 800 #הגדרת רוחב מסך
+WINDOW_H = 500 #הגדרת גובה מסך
 WINDOW_SIZE = (WINDOW_W, WINDOW_H) #טאפל של גודל המסך
 
 pygame.init() #התחלה
@@ -37,7 +37,7 @@ def print_lasers():
     screen.blit(laser_image,(laser[0],laser[1]))
     laser_list[i] = [laser[0],laser[1]-30]
     if is_laser_hit(laser): 
-      print("hit")
+      return True
 
   # remove lazer that our outside of the window
   if len(laser_list) > 0 and laser_list[0][1] < 0:
@@ -82,8 +82,8 @@ while play:
     screen.blit(background, (0, 0)) #הצגת הרקע 
     # laser_y -= 10 #הקטנת ציר הווי של הלייזר כדי שיזוז למעלה
     screen.blit(ship_image, (ship_x, ship_y)) #הצגת החללית במיקום שהגדרנו
-    screen.blit(laser_image, (laser_x, laser_y)) #הצגת הלייזר במיקום שהגדרנו
-    print_lasers()
+    if print_lasers():
+        circle_x= 10
 
     clock.tick(40) #קצב החזרה של הלולאה
 
