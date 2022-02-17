@@ -1,5 +1,6 @@
 import pygame #ליבא ספריה של pygame
 import time #ליבא ספריה של זמן  
+import cv
 
 # screen size
 WINDOW_W = 800 #הגדרת רוחב מסך
@@ -58,7 +59,6 @@ laser_y= -100  #הגדרת ציר האיקס של הלייזר כך שלא יר�
 play = True 
 
 while play:
-
     pygame.draw.circle(screen, (255, 255, 255), (circle_x, circle_y), 10) #ציור עיגול (מסך, צבע לבן, מיקום שהגדרנו, רדיוס)
     circle_x += x_step #הגדלת ציר האיקס של הכדור כדי שיזוז לפי הצעדים שהגדרנו
     if circle_x > WINDOW_W: #אם ציר האיקס של הכדור גדול מרוחב המסך
@@ -86,9 +86,9 @@ while play:
         pygame.mixer.Channel(1).play(pygame.mixer.Sound(success))
         counter+=10
 
-    blue = (150, 0, 0)
+    red = (150, 0, 0)
     font = pygame.font.SysFont(None, 50)
-    img = font.render('score: '+ str(counter), True, blue)
+    img = font.render('score: '+ str(counter), True, red)
     screen.blit(img, (20, 20))
 
     clock.tick(40) #קצב החזרה של הלולאה
