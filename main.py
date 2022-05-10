@@ -1,6 +1,6 @@
 import pygame #ליבא ספריה של pygame
 import time #ליבא ספריה של זמן  
-import cv
+
 
 # screen size
 WINDOW_W = 800 #הגדרת רוחב מסך
@@ -57,6 +57,7 @@ ship_y = WINDOW_H - 80 #ציר הווי של החללית (גובה המסך - �
 laser_x= -100  #הגדרת ציר האיקס של הלייזר כך שלא יראו אותו
 laser_y= -100  #הגדרת ציר האיקס של הלייזר כך שלא יראו אותו
 play = True 
+hold= 0
 
 while play:
     pygame.draw.circle(screen, (255, 255, 255), (circle_x, circle_y), 10) #ציור עיגול (מסך, צבע לבן, מיקום שהגדרנו, רדיוס)
@@ -71,13 +72,19 @@ while play:
             play = False #שינוי המשתנה לשקר ויציאה מהלולאה כך שהתוכנית תיסגר
         elif event.type == pygame.KEYDOWN: #אם סוג האירוע הוא לחיצה על מקש
             if event.key == pygame.K_LEFT: #אם הלחיצה היא על המקש שמאלה
-                ship_x -= 10 #ציר האיקס של החללית יקטן ב10
+                hold= -1
+                # ship_x -= 10 #ציר האיקס של החללית יקטן ב10
             if event.key == pygame.K_RIGHT: #אם הלחיצה היא על המקש ימינה
-                ship_x += 10 #ציר האיקס של החללית יגדל ב10
+                hold= 1
+                # ship_x += 10 #ציר האיקס של החללית יגדל ב10
+
             if event.key == pygame.K_SPACE: #אם הלחיצה היא על מקש הרווח
                 pygame.mixer.Channel(0).play(pygame.mixer.Sound(gun_shoot)) # פתיחת ערוץ למקרה שנוסיף עוד סאונד וניגון של הסאונד
                 laser_list.append([ship_x+16,ship_y])
+        elif event.type == pygame.KEYUP:
+            hold= 0
 
+    ship_x += 10 * hold
     screen.blit(background, (0, 0)) #הצגת הרקע 
     # laser_y -= 10 #הקטנת ציר הווי של הלייזר כדי שיזוז למעלה
     screen.blit(ship_image, (ship_x, ship_y)) #הצגת החללית במיקום שהגדרנו
